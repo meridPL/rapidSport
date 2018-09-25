@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title of the document</title>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<link rel="stylesheet" href="css/panel.css">
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/message.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
+</head>
+
+<body>
+	<section class="login">
+		<div class="login__content">
+			<h2 class="login__title">Panel klienta</h2>
+			<div class="form">
+				<form id="check-login-form">
+					<input class="form-control" placeHolder="Login" id="login" type="text" name="login">
+					<input class="form-control" placeHolder="Hasło" id="pass" type="password" name="password">
+					<button class="btn btn-outline-primary float-right" type="submit">Zaloguj</button>
+					<button class="btn btn-outline-primary float-right" type="button" id="home">Home</button>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section id="panel">
+		<section class="info">
+			<h2>Jesteś zalogowany</h2>
+			<button class="btn btn-outline-primary" type="button" id="wyloguj">Wyloguj</button>
+		</section>
+		<section class="option1">
+			<div class="option1__naglowek">
+				<div class="switch">
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+						<label class="onoffswitch-label" for="myonoffswitch"></label>
+					</div>
+				</div>
+				<h2>Komunikat</h2>
+				<button class="btn btn-outline-primary option1_save" type="button">Zapisz</button>
+			</div>
+			<textarea class="form-control option1_textarea"></textarea>
+		</section>
+		<section class="gallery">
+			<div class="gallery__header">
+				<h2 class="gallery__title">Galeria</h2>
+				<button class="btn btn-outline-primary gallery_save" type="button">Zapisz</button>
+			</div>
+			<input type="file" class="img__file">
+			<div class="gallery__content">
+				<div class="img img-test">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+				<div class="img">
+					<span class="fas fa-plus fa-7x"></span>
+				</div>
+			</div>
+		</section>
+
+	</section>
+</body>
+
+</html>
+<script src="js/gallery.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#panel").show();
+		$(".login").hide();
+		// $("#panel").hide();
+		// $(".login").show();
+		loadKomunikat();
+		loadGallery();
+	});
+
+	function loadKomunikat() {
+		let tab = getMessage('komunikat', function (tab) {
+			console.log(tab);
+
+			$(".option1_textarea").val(tab.text);
+			$("#myonoffswitch").prop('checked', (tab.turn == 0) ? false : true);
+		});
+	};
+
+	$(".option1_save").click(function () {
+		console.log('click save');
+		let text = $(".option1_textarea").val();
+		let turn = $("#myonoffswitch").prop('checked');
+		saveMessage('komunikat', text, turn);
+	});
+
+	$("#wyloguj").click(function () {
+		$("#panel").hide();
+		$(".login").show();
+	});
+
+	$("#home").click(function () {
+		document.location.replace("index.html");
+	})
+
+	$("#check-login-form").submit(function (e) {
+		e.preventDefault();
+		console.log('submit');
+		let dane = $(this).serializeArray();
+		console.log(dane);
+		$.post("checkUser.php", dane, function (data) {
+			console.log(data);
+			try {
+				let dane = JSON.parse(data);
+				if (dane.check > 0) {
+					$("#panel").show();
+					$(".login").hide();
+					loadKomunikat();
+					loadGallery();
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		});
+	})
+</script>

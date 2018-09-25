@@ -1,0 +1,96 @@
+@import "switch.css";
+body{
+    height: 5000px;
+}
+.img__file{
+    display: none;
+}
+.gallery{
+    width: 60%;
+    margin: 0 auto;
+    .gallery__header{
+        overflow: auto;
+    }
+    h2{
+        float: left;
+    }
+    .gallery_save{
+        float: right;
+    }
+    .gallery__content{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(2, 1fr);
+    }
+    .img{
+        &:hover{
+            background: rgb(68, 68, 68);
+        }
+        
+        &:hover img{
+            opacity: 0.3;        
+        }
+        &:hover .minus{
+            visibility: visible;
+            opacity: 1;
+        }
+        background: rgb(151, 151, 151);
+        border: 1px solid #8c8c8c;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .minus{
+        visibility: hidden;
+        position: absolute;
+    }
+}
+.option1{
+    overflow: auto;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    .option1__naglowek{
+        overflow: auto;
+        display: block;
+    }
+    .option1_save{
+        float: right;
+    }
+    .switch{
+        margin-right: 20px;
+        float: left;
+    }
+    h2{
+        float: left;
+        vertical-align: top;
+        line-height: 0.8;
+    }
+    .option1_textarea{
+        display: block;
+    }
+}
+#panel{
+    display: none;
+}
+.info{
+    width: 60%;
+    margin: 0 auto;
+}
+.login{
+    position: absolute;
+    top: 10%;
+    width: 100%;
+}
+.login__content{
+    width: 40%;
+    margin: 0 auto;
+    button{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+}
+.login__title{
+    text-align: center;
+}
